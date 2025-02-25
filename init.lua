@@ -25,7 +25,7 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
   indent = {
-    enable = true
+    enable = false
   }
 }
 
@@ -42,3 +42,24 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 		vim.fn.writefile({cwd}, last_dir)
 	end
 })
+
+-- LSP stuff
+require('mason').setup()
+
+local cmp = require 'cmp'
+
+cmp.setup {
+	sources = {
+		{ name = 'nvim_lsp' },
+		{ name = 'path' },
+		{ name = 'buffer' }
+	},
+	mapping = {
+		["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+		["<C-p>"] = cmp.mapping.select_prev_item { bebavior = cmp.SelectBehavior.Insert },
+		["<Tab>"] = cmp.mapping.confirm {
+			behavior = cmp.ConfirmBehavior.Insert,
+			select = true,
+		},
+	},
+}
