@@ -11,7 +11,7 @@ vim.g.mapleader = " "
 require("config.lazy")
 
 -- Choose colorscheme
--- Installed: nord, catppuccin (with it's flavors)
+-- Installed: nord, catppuccin, tokyonight
 vim.cmd('colorscheme github_dark_dimmed') 
 
 -- Treesitter config
@@ -31,7 +31,7 @@ require'nvim-treesitter.configs'.setup {
 
 -- empty setup using defaults
 require("nvim-tree").setup()
-vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>E', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
 
 local last_dir = vim.fn.stdpath('data') .. '/last_dir'
 
@@ -73,3 +73,31 @@ cmp.setup {
 		},
 	},
 }
+
+require('telescope').setup{
+	pickers = {
+		find_files = {
+			theme = 'dropdown',
+		},
+	},
+}
+
+-- Mappings
+-- Telescope
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+
+-- Window navigation
+vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', {noremap = true, silent = true})
+
+-- Open error float
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+
+vim.keymap.set({ 'n', 'v' }, '<leader>f', vim.lsp.buf.format, { desc = "Format buffer or selection"})
