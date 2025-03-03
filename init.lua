@@ -1,6 +1,7 @@
 local opt = vim.opt
 -- opt is global options
 
+
 opt.cursorline = true
 opt.number = true
 opt.relativenumber = true
@@ -35,13 +36,12 @@ vim.api.nvim_set_keymap('n', '<leader>E', ':NvimTreeFocus<CR>', { noremap = true
 
 local last_dir = vim.fn.stdpath('data') .. '/last_dir'
 
--- Save current directory on exit
-vim.api.nvim_create_autocmd('VimLeavePre', {
-	callback = function()
-		local cwd = fn.getcwd()
-		vim.fn.writefile({cwd}, last_dir)
-	end
-})
+-- Mini modules
+require('mini.pairs').setup()
+require('mini.ai').setup()
+require('mini.move').setup()
+require('mini.surround').setup()
+require('mini.git').setup()
 
 -- LSP stuff
 require('mason').setup()
